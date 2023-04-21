@@ -76,10 +76,3 @@ class WaveFile:
         elif self.numChannels == 2:
             for sample in val:
                 f.write(sample.to_bytes(self.blockAlign//2, "little", signed=signed))
-            
-
-with open("trainmod.wav", "rb+") as f:
-    wf = WaveFile(f)
-    print(wf.__dict__)
-    for i in range(0, wf.numSamples, 2):
-        wf[i], wf[i + 1] = wf[i + 1], wf[i]
