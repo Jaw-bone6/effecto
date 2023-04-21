@@ -4,6 +4,8 @@ from typing import Union, Tuple
 
 class WaveFile:
     def __init__(self, f: BufferedIOBase) -> None:
+        self.f = f
+
         assert f.readable(), "file must be readable"
         assert f.seekable(), "file must be seekable"
         assert f.writable(), "file must be writable"
@@ -45,6 +47,7 @@ class WaveFile:
 
 
     def __getitem__(self, i: int) -> Union[int, Tuple[int, int]]:
+        f = self.f
         assert type(i) == int, f"cannot index file with {type(i)}"
         if i < 0 or i >= self.numSamples:
             raise IndexError(f"index {i} is out of range")
@@ -62,6 +65,7 @@ class WaveFile:
         
     
     def __setitem__(self, i: int, val: int) -> None:
+        f = self.f
         assert type(i) == int, f"cannot index file with {type(i)}"
         if i < 0 or i >= self.numSamples:
             raise IndexError(f"index {i} is out of range")
